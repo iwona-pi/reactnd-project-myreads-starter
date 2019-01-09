@@ -1,20 +1,39 @@
 import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
+import Results from './Results'
  
 
 
 class Search extends Component {
+  state = {
+    results: [],
+    query: ''
+  }
 
-
-  searchBooks(query) {
+  handleSearch = (a) => {
+      this.setState(
+        {query: a},
+        () => {
+          if (this.state.query && this.state.query.length > 0) {
+              this.searchBooks(a)
+          } else {
+            this.setState({results: []})
+          }
+        })
+  }
+  searchBooks = (query) => {
       BooksAPI.search(query).then((books) => 
-                  books.map((book) => console.log(book.title)))
+                  this.setState({results: books})).catch(function(e){
+                    console.log("error")
+                  })
 }
+
+ 
     
     render () {
         const { StartPage } = this.props
         
-        return (
+         return (
           <div className="search-books">
             <div className="search-books-bar">
               <button className="close-search" onClick={() => StartPage()}>Close</button>
@@ -28,14 +47,18 @@ class Search extends Component {
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
                 <input type="text" placeholder="Search by title or author"
-                onChange={(event) => this.searchBooks(event.target.value)}
+                onChange={(event) => {this.handleSearch(event.target.value)}}
+                   
+
                 />
 
               </div>
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-           
+                <Results
+                results = {this.state.results}/>
+                
               </ol>
             </div>
           </div>
