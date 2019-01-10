@@ -2,6 +2,7 @@ import React from 'react'
 import { Route } from 'react-router'
 import Bookshelf from './Bookshelf'
 import Search from './Search'
+import * as BooksAPI from './BooksAPI'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -14,14 +15,16 @@ class BooksApp extends React.Component {
      */
     newPage: ''
   }
-/*componentDidMount() {
+  wer = ()=> {
     BooksAPI.getAll().then((boo) => {
-      this.setState({ boo })
+      
       console.log({boo});
     })
-} */
+} 
 componentDidMount() {
-  this.setState({ newPage: window.location.href })
+  this.setState({ newPage: window.location.href });
+  this.wer();
+  
 }
   onClick = () =>{
     let f = window.location
@@ -40,7 +43,8 @@ componentDidMount() {
        
           <Route exact path='/' render={() => (
             <Bookshelf
-            NewPage = {this.onClick}/>
+            NewPage = {this.onClick}
+             />
           )}/>
           
           <Route path='/search' render={({history}) => (

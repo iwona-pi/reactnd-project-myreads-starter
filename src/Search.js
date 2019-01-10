@@ -28,7 +28,12 @@ class Search extends Component {
                   })
 }
 
- 
+componentDidMount() {
+   BooksAPI.getAll().then((boo) => {
+      
+      console.log({boo});
+    })
+}
     
     render () {
         const { StartPage } = this.props
@@ -54,13 +59,13 @@ class Search extends Component {
 
               </div>
             </div>
-            <div className="search-books-results">
-              <ol className="books-grid">
-                <Results
-                results = {this.state.results}/>
+            
+              
+            <Results
+            results = {this.state.results}/>
                 
-              </ol>
-            </div>
+              
+            
           </div>
     )
 }}

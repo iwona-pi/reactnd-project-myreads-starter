@@ -1,13 +1,31 @@
 import React, { Component } from 'react'
+import * as BooksAPI from './BooksAPI'
 
 class Results extends Component {
- 
+	kupa(s) {
+		console.log(s)
+	}
+
+	updateBook = (book, shelf) => {
+		if (shelf !== 'move') {
+      BooksAPI.update(book, shelf).then((res) => 
+                 console.log({res})
+                  
+                  )}
+                  
+}
+ componentDidMount() {
+   BooksAPI.getAll().then((boo) => {
+      
+      console.log({boo});
+    })
+}
  render () {
  	
- 	const {results} = this.props
+ 	const {results, class1="search-books-results"} = this.props
  	
  	return (
- 		<div className="search-books-results">
+ 		<div className={class1}>
  			{results.length >0 &&
  			<ol className="books-grid">
  			{results.map((result, i) => 
@@ -16,8 +34,8 @@ class Results extends Component {
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${result.imageLinks.smallThumbnail})` }}></div>
                             <div className="book-shelf-changer">
-                              <select>
-                                <option value="move" disabled>Move to...</option>
+                              <select onClick={(e) => this.updateBook(result, e.target.value)}>
+                                <option value="move" >Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
                                 <option value="read">Read</option>
