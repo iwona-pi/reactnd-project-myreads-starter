@@ -28,12 +28,12 @@ class Search extends Component {
                   })
 }
 
-componentDidMount() {
+/*componentDidMount() {
    BooksAPI.getAll().then((boo) => {
-      
+      this.setState({results: boo})
       console.log({boo});
     })
-}
+}*/
     
     render () {
         const { StartPage } = this.props
@@ -62,8 +62,10 @@ componentDidMount() {
             
               
             <Results
-            results = {this.state.results}/>
-                
+            results = {this.state.results}
+
+            />
+            
               
             
           </div>

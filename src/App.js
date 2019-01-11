@@ -34,6 +34,18 @@ componentDidMount() {
       this.setState({newPage: f.pathname = '/'})
     }
   }
+    updateBook = (book, shelf) => {
+    if (shelf !== 'move') {
+      BooksAPI.update(book, shelf).then((res) => 
+                 
+                 BooksAPI.getAll(res)).then((boo) => {
+      
+      this.setState({books: boo})}
+                 
+                  
+                  )}
+                  
+}
 
  
 
@@ -44,12 +56,15 @@ componentDidMount() {
           <Route exact path='/' render={() => (
             <Bookshelf
             NewPage = {this.onClick}
+            updateBook = {this.updateBook}
              />
+            
           )}/>
           
           <Route path='/search' render={({history}) => (
             <Search
-            StartPage = {this.onClick}/>
+            StartPage = {this.onClick}
+            />
           )}/>
         
       </div>

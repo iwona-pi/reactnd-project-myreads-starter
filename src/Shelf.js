@@ -1,29 +1,11 @@
 import React, { Component } from 'react'
-import * as BooksAPI from './BooksAPI'
-
-class Results extends Component {
-	state = {
-		books: {}
-	}
 
 
- componentDidMount() {
-   BooksAPI.getAll().then((boo) => {
-      
-      this.setState({books: {}})
-})}
- 		updateBook = (book, shelf) => {
-		if (shelf !== 'move') {
-      BooksAPI.update(book, shelf).then((res) => 
-                 
-         console.log(res)
-                 
-                  
-                  )}
-                  
-}
+class Shelf extends Component {
 
- render () {
+
+
+render () {
 
  	const {results, class1="search-books-results"} = this.props
  	
@@ -37,7 +19,7 @@ class Results extends Component {
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${result.imageLinks.smallThumbnail})` }}></div>
                             <div className="book-shelf-changer">
-                              <select onClick={(e) => this.updateBook(result, e.target.value)}>
+                              <select onClick={(e) => this.props.updateBook(result, e.target.value)}>
                                 <option value="move" >Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
@@ -54,7 +36,9 @@ class Results extends Component {
  }		</div>
  		)
  	
-}}
+}
 
-export default Results
 
+}
+
+export default Shelf
