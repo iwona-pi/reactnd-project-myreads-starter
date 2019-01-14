@@ -10,7 +10,7 @@ class Results extends Component {
  componentDidMount() {
    BooksAPI.getAll().then((boo) => {
       
-      this.setState({books: {}})
+      this.setState({books: boo})
 })}
  		updateBook = (book, shelf) => {
 		if (shelf !== 'move') {
@@ -35,10 +35,11 @@ class Results extends Component {
  				<li key={i} >
 					<div className="book">
                           <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${result.imageLinks.smallThumbnail})` }}></div>
+                          	{result.imageLinks  &&
+                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${result.imageLinks.smallThumbnail})` }}></div>}
                             <div className="book-shelf-changer">
-                              <select onClick={(e) => this.updateBook(result, e.target.value)}>
-                                <option value="move" >Move to...</option>
+                              <select onClick={(e) => this.updateBook(result, e.target.value)} defaultValue="move">
+                                <option value="move" disabled >Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
                                 <option value="read">Read</option>
@@ -47,7 +48,8 @@ class Results extends Component {
                             </div>
                           </div>
                           <div className="book-title">{result.title}</div>
-                          <div className="book-authors">df</div>
+                          {result.authors &&
+                          <div className="book-authors">{result.authors[0]}</div>}
                     </div> 										
                 </li>)}
  			</ol>

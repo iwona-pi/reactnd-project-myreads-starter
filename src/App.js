@@ -13,7 +13,8 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    newPage: ''
+    newPage: '',
+    books: []
   }
   wer = ()=> {
     BooksAPI.getAll().then((boo) => {
@@ -23,9 +24,36 @@ class BooksApp extends React.Component {
 } 
 componentDidMount() {
   this.setState({ newPage: window.location.href });
-  this.wer();
+   BooksAPI.getAll().then((boo) => {
+      
+      this.setState({books: boo})})
   
 }
+
+updateBook = (book, shelf) => {
+    
+      if (book.shelf !==shelf) {
+      let y = this.state.books
+      const t = y.filter(d=> d.id === book.id)[0];
+      t.shelf = shelf;
+      BooksAPI.update(book, shelf).then((res) => 
+
+             // console.log(res))
+            this.setState({
+              books: y
+            }))
+     /*BooksAPI.getAll(res)).then((boo) => {
+      
+      this.setState({books: boo})})*/
+
+         }}
+
+/*    value = () => {
+    
+    return this.state.books[0].shelf
+
+}*/                              
+
   onClick = () =>{
     let f = window.location
     if (f.pathname === '/') {
@@ -34,18 +62,7 @@ componentDidMount() {
       this.setState({newPage: f.pathname = '/'})
     }
   }
-    updateBook = (book, shelf) => {
-    if (shelf !== 'move') {
-      BooksAPI.update(book, shelf).then((res) => 
-                 
-                 BooksAPI.getAll(res)).then((boo) => {
-      
-      this.setState({books: boo})}
-                 
-                  
-                  )}
-                  
-}
+
 
  
 
@@ -57,7 +74,10 @@ componentDidMount() {
             <Bookshelf
             NewPage = {this.onClick}
             updateBook = {this.updateBook}
+            books = {this.state.books}
              />
+            
+            
             
           )}/>
           
