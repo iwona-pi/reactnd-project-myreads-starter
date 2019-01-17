@@ -26,13 +26,13 @@ componentDidMount() {
   this.setState({ newPage: window.location.href });
    BooksAPI.getAll().then((boo) => {
       
-      this.setState({books: boo})})
-  
+      this.setState({books: boo});
+  console.log({boo})})
 }
 
 updateBook = (book, shelf) => {
     
-      if (book.shelf !==shelf) {
+ /*     if (book.shelf !==shelf) {
       let y = this.state.books
       const t = y.filter(d=> d.id === book.id)[0];
       t.shelf = shelf;
@@ -41,12 +41,13 @@ updateBook = (book, shelf) => {
              // console.log(res))
             this.setState({
               books: y
-            }))
-     /*BooksAPI.getAll(res)).then((boo) => {
+            }))*/
+    BooksAPI.update(book, shelf).then((res) => 
+     BooksAPI.getAll(res)).then((boo) => {
       
-      this.setState({books: boo})})*/
+      this.setState({books: boo})})
 
-         }}
+         }
 
 /*    value = () => {
     
@@ -71,15 +72,33 @@ updateBook = (book, shelf) => {
       <div className="app">
        
           <Route exact path='/' render={() => (
+            <div>
             <Bookshelf
             NewPage = {this.onClick}
             updateBook = {this.updateBook}
-            books = {this.state.books}
+            // books = {this.state.books}
+            results = {this.state.books.filter(function(book) {
+                        return book.shelf === "currentlyReading"})}
              />
             
+            <Bookshelf
+            NewPage = {this.onClick}
+            updateBook = {this.updateBook}
             
-            
+            results = {this.state.books.filter(function(book) {
+                        return book.shelf === "wantToRead"})}
+             />
+
+             <Bookshelf
+            NewPage = {this.onClick}
+            updateBook = {this.updateBook}
+            // books = {this.state.books}
+            results = {this.state.books.filter(function(book) {
+                        return book.shelf === "read"})}
+             />
+            </div>
           )}/>
+
           
           <Route path='/search' render={({history}) => (
             <Search

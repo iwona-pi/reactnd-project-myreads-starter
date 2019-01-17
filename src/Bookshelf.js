@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import * as BooksAPI from './BooksAPI'
-import Shelf from './Shelf'
+
+import Book from './Book'
 
 
 class Bookshelf extends Component {
@@ -10,7 +10,8 @@ class Bookshelf extends Component {
 	}
 
 	static propTypes = {
-   		NewPage: PropTypes.func.isRequired
+   		NewPage: PropTypes.func.isRequired,
+   		results: PropTypes.array.isRequired
   }
 
 /*	moveBook = () => {
@@ -31,7 +32,7 @@ class Bookshelf extends Component {
 	
 	render () {
 		
-		const { books, NewPage, class2 = "bookshelf-books"} = this.props
+		const { NewPage, class2 = "bookshelf-books", results, updateBook} = this.props
 			
 		return (
 			<div className="list-books">
@@ -45,22 +46,32 @@ class Bookshelf extends Component {
                   
                       {/*{this.state.books.map((book) => 
 						book.shelf === "currentlyReading" &&*/}
-                      <Shelf
-                      results = {books.filter(function(book) {
-                      	return book.shelf === "currentlyReading"
-                      })}
+					<div className="search-books-results">
+ 		
+ 						<ol className="books-grid">
+					{results.map(book => (
+                      
+                      <Book
+                      
                       class1 = {class2}
-                      updateBook = {this.props.updateBook}
+                      updateBook = {updateBook}
+                       key= {book.id}
+                       book = {book}
+                       imageLinks = {book.imageLinks}
+                       shelf = {book.shelf}
+                       title = {book.title}
+                       authors = {book.authors}
                     	
-                      />
-  
+                      />))}
+  						</ol>
+ 					</div>
                 </div>
-                <div className="bookshelf">
+               {/* <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
                   	<Shelf
+                      
                       results = {books.filter(function(book) {
-                      	return book.shelf === "wantToRead"
-                      })}
+                      	return book.shelf === "wantToRead"})}
                       class1 = {class2}
                       updateBook = {this.props.updateBook}
 
@@ -77,7 +88,7 @@ class Bookshelf extends Component {
                       updateBook = {this.props.updateBook}
                       />
                  
-                </div>
+                </div>*/}
               </div>
             </div>
             <div className="open-search">

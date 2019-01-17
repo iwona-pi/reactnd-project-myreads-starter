@@ -1,25 +1,17 @@
-import React, { Component } from 'react'
+import React  from 'react'
+import PropTypes from 'prop-types';
 
-const Book = ({book}) =>  {
+const Book = ({book, updateBook}) =>  
 
+ 	(
 
-
-
-
- 	const {class1="search-books-results"} = this.props
- 	
- 	return (
- 		<div className={class1}>
- 		
- 			<ol className="books-grid">
- 		
- 				<li key={book.id} >
+ 				<li>
 					<div className="book">
                           <div className="book-top">
                           {book.imageLinks  &&
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>}
                             <div className="book-shelf-changer">
-                              <select onClick={ (e) => this.props.updateBook(book, e.target.value) } defaultValue = {book.shelf}>
+                              <select onClick={ (e) => updateBook(book, e.target.value) } defaultValue = {book.shelf}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
@@ -32,14 +24,22 @@ const Book = ({book}) =>  {
                           {book.authors &&
                           <div className="book-authors">{book.authors[0]}</div>}
                     </div> 										
-                </li>)}
- 			</ol>
- }		</div>
- 		)
- 	
+                </li>
+ )
+ 		
+;
 
-
-
+ Book.propTypes = {
+	
+	imageLinks: PropTypes.object.isRequired,
+	shelf: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	authors: PropTypes.array.isRequired,
+	book: PropTypes.object.isRequired,
+	updateBook: PropTypes.func.isRequired
 }
 
-export default Shelf
+export default Book;
+
+
+// (e) => book.updateBook(book, e.target.value)

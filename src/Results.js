@@ -7,11 +7,7 @@ class Results extends Component {
 	}
 
 
- componentDidMount() {
-   BooksAPI.getAll().then((boo) => {
-      
-      this.setState({books: boo})
-})}
+
  		updateBook = (book, shelf) => {
 		if (shelf !== 'move') {
       BooksAPI.update(book, shelf).then((res) => 
