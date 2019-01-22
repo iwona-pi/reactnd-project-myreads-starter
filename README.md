@@ -1,6 +1,6 @@
 # MyReads Project
 
-This project is completed using React. Small app showing three shelves of books with possibility to moving through them all books. Backend server enables schearching new books and adding them to our shelves.
+Small application showing three shelves of books with possibility to moving through them all books. Backend server enables schearching new books and adding them to our shelves. This project is completed using React.
 
 ## How to run the app
 
