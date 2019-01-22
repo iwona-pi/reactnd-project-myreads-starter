@@ -7,7 +7,8 @@ import Results from './Results'
 class Search extends Component {
   state = {
     results: [],
-    query: ''
+    query: '',
+    books: []
   }
 
   handleSearch = (a) => {
@@ -15,25 +16,30 @@ class Search extends Component {
         {query: a},
         () => {
           if (this.state.query && this.state.query.length > 0) {
-              this.searchBooks(a)
+              this.searchBooks(a);
+             
           } else {
             this.setState({results: []})
           }
         })
+      
   }
+
+  componentDidMount() {
+   BooksAPI.getAll().then((books) => {
+      
+      this.setState({books: books})})
+  }
+
+
   searchBooks = (query) => {
       BooksAPI.search(query).then((books) => 
-                  this.setState({results: books})).catch(function(e){
+                  this.setState({results: books})
+                   ).catch(function(e){
                     console.log("error")
                   })
-}
+  }
 
-/*componentDidMount() {
-   BooksAPI.getAll().then((boo) => {
-      this.setState({results: boo})
-      console.log({boo});
-    })
-}*/
     
     render () {
         const { StartPage } = this.props
@@ -53,21 +59,17 @@ class Search extends Component {
                 */}
                 <input type="text" placeholder="Search by title or author"
                 onChange={(event) => {this.handleSearch(event.target.value)}}
-                   
-
                 />
 
               </div>
             </div>
-            
-              
+                      
             <Results
             results = {this.state.results}
-
+            update = {this.update}
+            books = {this.state.books}
             />
-            
-              
-            
+    
           </div>
     )
 }}

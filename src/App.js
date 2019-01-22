@@ -16,46 +16,25 @@ class BooksApp extends React.Component {
     newPage: '',
     books: []
   }
-  wer = ()=> {
-    BooksAPI.getAll().then((boo) => {
-      
-      console.log({boo});
-    })
-} 
+ 
 componentDidMount() {
   this.setState({ newPage: window.location.href });
-   BooksAPI.getAll().then((boo) => {
+   BooksAPI.getAll().then((books) => {
       
-      this.setState({books: boo});
-  console.log({boo})})
+      this.setState({books: books})})
 }
 
 updateBook = (book, shelf) => {
-    
- /*     if (book.shelf !==shelf) {
-      let y = this.state.books
-      const t = y.filter(d=> d.id === book.id)[0];
-      t.shelf = shelf;
-      BooksAPI.update(book, shelf).then((res) => 
 
-             // console.log(res))
-            this.setState({
-              books: y
-            }))*/
     BooksAPI.update(book, shelf).then((res) => 
-     BooksAPI.getAll(res)).then((boo) => {
+     BooksAPI.getAll(res)).then((books) => {
       
-      this.setState({books: boo})})
+      this.setState({books: books})})
 
          }
+                              
 
-/*    value = () => {
-    
-    return this.state.books[0].shelf
-
-}*/                              
-
-  onClick = () =>{
+onClick = () =>{
     let f = window.location
     if (f.pathname === '/') {
     this.setState({ newPage: f.pathname = 'search' })
@@ -72,31 +51,37 @@ updateBook = (book, shelf) => {
       <div className="app">
        
           <Route exact path='/' render={() => (
-            <div>
-            <Bookshelf
-            NewPage = {this.onClick}
-            updateBook = {this.updateBook}
-            // books = {this.state.books}
-            results = {this.state.books.filter(function(book) {
-                        return book.shelf === "currentlyReading"})}
-             />
-            
-            <Bookshelf
-            NewPage = {this.onClick}
-            updateBook = {this.updateBook}
-            
-            results = {this.state.books.filter(function(book) {
-                        return book.shelf === "wantToRead"})}
-             />
-
-             <Bookshelf
-            NewPage = {this.onClick}
-            updateBook = {this.updateBook}
-            // books = {this.state.books}
-            results = {this.state.books.filter(function(book) {
-                        return book.shelf === "read"})}
-             />
+            <div className="list-books">
+            <div className="list-books-title">
+              <h1>MyReads</h1>
             </div>
+              <div className="list-books-content">
+                <Bookshelf
+                title = "Currently Reading"
+                NewPage = {this.onClick}
+                updateBook = {this.updateBook}
+                results = {this.state.books.filter(function(book) {
+                            return book.shelf === "currentlyReading"})}
+                 />
+                
+                <Bookshelf
+                title = "Want to Read"
+                NewPage = {this.onClick}
+                updateBook = {this.updateBook}
+                results = {this.state.books.filter(function(book) {
+                            return book.shelf === "wantToRead"})}
+                 />
+    
+                 <Bookshelf
+                title = "Read"
+                NewPage = {this.onClick}
+                updateBook = {this.updateBook}
+                results = {this.state.books.filter(function(book) {
+                            return book.shelf === "read"})}
+             />
+              </div>
+            </div>
+
           )}/>
 
           
