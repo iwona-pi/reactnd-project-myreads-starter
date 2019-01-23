@@ -88,6 +88,7 @@ onClick = () =>{
           <Route path='/search' render={({history}) => (
             <Search
             StartPage = {this.onClick}
+            updateBook = {this.updateBook}
             />
           )}/>
         

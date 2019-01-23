@@ -42,7 +42,7 @@ class Search extends Component {
 
     
     render () {
-        const { StartPage } = this.props
+        const { StartPage, updateBook } = this.props
         
          return (
           <div className="search-books">
@@ -66,7 +66,7 @@ class Search extends Component {
                       
             <Results
             results = {this.state.results}
-            update = {this.update}
+            updateBook = {updateBook}
             books = {this.state.books}
             />
     

@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
-import * as BooksAPI from './BooksAPI'
+// import * as BooksAPI from './BooksAPI'
 // import PropTypes from 'prop-types'
 
 class Results extends Component {
-
- 	updateBook = (book, shelf) => {
-      		BooksAPI.update(book, shelf)                        
-		}
 
 
  render () {
 
 
- 	const {results, books} = this.props
+ 	const {results, books, updateBook} = this.props
 
  	let  res 
  	if (results.length >0) {
@@ -39,7 +35,7 @@ class Results extends Component {
                           	{result.imageLinks  &&
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${result.imageLinks.smallThumbnail})` }}></div>}
                             <div className="book-shelf-changer">
-                              <select onClick={(e) => this.updateBook(result, e.target.value)} defaultValue={result.shelf}>
+                              <select onChange={(e) => updateBook(result, e.target.value)} defaultValue={result.shelf}>
                                 <option value="move" disabled >Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
